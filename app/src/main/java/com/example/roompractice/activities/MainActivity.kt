@@ -44,12 +44,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
             val note_id = UUID.randomUUID().toString()
             val note = NoteEntity(note_id, data!!.getStringExtra(NewNoteActivity.NOTE_ADDED))
-
-                  noteViewModel?.insert(note)
-
-
-
-            showSuccessMessage("Note inserted")
+            noteViewModel?.insert(note)
 
 
 

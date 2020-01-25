@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.roompractice.db.NoteRoomDataBase
 import com.example.roompractice.db.daos.NoteDao
 import com.example.roompractice.db.entities.NoteEntity
+import com.example.roompractice.extensions.showSuccessMessage
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -15,9 +16,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
         get() = job + Dispatchers.Main
     private val TAG = this.javaClass.simpleName
     private var noteDao:NoteDao?=null
+    lateinit var context:Application
     private var noteDB:NoteRoomDataBase?=null
     init {
         job=Job()
+        context=application
         noteDB = NoteRoomDataBase.getAppDataBase(application)
         noteDao=noteDB?.noteDao()
     }
@@ -26,8 +29,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
         launch(coroutineContext) {
 
             withContext(Dispatchers.Default) {
-                noteDao?.insert(note)
+             noteDao?.insert(note)
             }
+            context.showSuccessMessage("Note added successfully")
+
         }
     }
     override fun onCleared() {
