@@ -11,8 +11,9 @@ import com.example.roompractice.R
 
 class NewNoteActivity : AppCompatActivity() {
 
-    val NOTE_ADDED = "new_note"
-
+    companion object {
+        val NOTE_ADDED = "new_note"
+    }
     private var etNewNote: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
