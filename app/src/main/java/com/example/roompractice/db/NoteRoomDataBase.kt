@@ -11,21 +11,21 @@ import com.example.roompractice.db.entities.NoteEntity
 abstract class NoteRoomDataBase :RoomDatabase() {
 
     abstract fun noteDao():NoteDao
-    @Volatile
-    private var noteRoomInstance: NoteRoomDataBase? = null
-    internal fun getDatabase(context: Context): NoteRoomDataBase {
-        if (noteRoomInstance == null) {
-            synchronized(NoteRoomDataBase::class.java) {
-                if (noteRoomInstance == null) {
-                    noteRoomInstance = Room.databaseBuilder(
-                        context.applicationContext,
-                        NoteRoomDataBase::class.java, "note_database"
-                    )
-                        .build()
+    companion object {
+        var INSTANCE: NoteRoomDataBase? = null
+
+        fun getAppDataBase(context: Context): NoteRoomDataBase? {
+            if (INSTANCE == null){
+                synchronized(RoomDatabase::class){
+                    INSTANCE = Room.databaseBuilder(context.applicationContext, NoteRoomDataBase::class.java, "notes_db").build()
                 }
             }
+            return INSTANCE
         }
-        return noteRoomInstance!!
+
+        fun destroyDataBase(){
+            INSTANCE = null
+        }
     }
 
 }
