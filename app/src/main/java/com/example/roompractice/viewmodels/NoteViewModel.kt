@@ -2,14 +2,10 @@ package com.example.roompractice.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.room.RoomDatabase
 import com.example.roompractice.db.NoteRoomDataBase
 import com.example.roompractice.db.daos.NoteDao
 import com.example.roompractice.db.entities.NoteEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class NoteViewModel(application: Application) : AndroidViewModel(application),CoroutineScope {
@@ -28,7 +24,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
 
     fun insert(note:NoteEntity){
         launch(coroutineContext){
-            noteDao?.insert(note)
+            withContext(Dispatchers.Default){
+                    noteDao?.insert(
+                        note
+                    )
+                }
         }
     }
     override fun onCleared() {
@@ -36,4 +36,5 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
         super.onCleared()
 
     }
+
 }

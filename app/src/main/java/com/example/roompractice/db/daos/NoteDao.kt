@@ -7,5 +7,5 @@ import com.example.roompractice.db.entities.NoteEntity
 @Dao
 interface NoteDao {
     @Insert
-    fun insert(note:NoteEntity)
+    fun insert(note:NoteEntity):Unit
 }
