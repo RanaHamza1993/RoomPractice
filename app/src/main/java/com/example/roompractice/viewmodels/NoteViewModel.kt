@@ -2,6 +2,7 @@ package com.example.roompractice.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.example.roompractice.db.NoteRoomDataBase
 import com.example.roompractice.db.daos.NoteDao
 import com.example.roompractice.db.entities.NoteEntity
@@ -18,13 +19,18 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
     private var noteDao:NoteDao?=null
     lateinit var context:Application
     private var noteDB:NoteRoomDataBase?=null
+    private var listOfNotes:LiveData<List<NoteEntity>>?=null
     init {
         job=Job()
         context=application
         noteDB = NoteRoomDataBase.getAppDataBase(application)
         noteDao=noteDB?.noteDao()
+        listOfNotes=noteDao?.getAllNotes()
     }
 
+    fun getAllNotes():LiveData<List<NoteEntity>>?{
+     return listOfNotes
+    }
     fun insert(note:NoteEntity){
         launch(coroutineContext) {
 
@@ -32,6 +38,26 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
              noteDao?.insert(note)
             }
             context.showSuccessMessage("Note added successfully")
+
+        }
+    }
+    fun update(note:NoteEntity){
+        launch(coroutineContext) {
+
+            withContext(Dispatchers.Default) {
+                noteDao?.update(note)
+            }
+            context.showSuccessMessage("Note updated successfully")
+
+        }
+    }
+    fun deleteNote(note:NoteEntity){
+        launch(coroutineContext) {
+
+            withContext(Dispatchers.Default) {
+                noteDao?.deleteData(note)
+            }
+            context.showSuccessMessage("Note deleted successfully")
 
         }
     }

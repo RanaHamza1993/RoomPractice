@@ -3,16 +3,15 @@ package com.example.roompractice.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.roompractice.R
+import com.example.roompractice.activities.EditNoteActivity
 import com.example.roompractice.activities.MainActivity
 import com.example.roompractice.db.entities.NoteEntity
 
@@ -42,7 +41,7 @@ class NoteListAdapter(
 
         if (mNotes != null) {
             val note = mNotes!![position]
-            holder.setData(note.getNote(), position)
+            holder.setData(note.mNote, position)
             holder.setListeners()
         } else {
             // Covers the case of data not being ready yet.
@@ -64,7 +63,7 @@ class NoteListAdapter(
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val noteItemView: TextView
+        val noteItemView: TextView
         private var mPosition: Int = 0
         private val imgDelete: ImageView
         private val imgEdit: ImageView
