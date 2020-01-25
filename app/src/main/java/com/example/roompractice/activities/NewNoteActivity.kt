@@ -8,6 +8,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.roompractice.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 class NewNoteActivity : AppCompatActivity() {
 
@@ -34,6 +38,10 @@ class NewNoteActivity : AppCompatActivity() {
 
             finish()
         })
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
 }

@@ -23,12 +23,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application),Co
     }
 
     fun insert(note:NoteEntity){
-        launch(coroutineContext){
-            withContext(Dispatchers.Default){
-                    noteDao?.insert(
-                        note
-                    )
-                }
+        launch(coroutineContext) {
+
+            withContext(Dispatchers.Default) {
+                noteDao?.insert(note)
+            }
         }
     }
     override fun onCleared() {
