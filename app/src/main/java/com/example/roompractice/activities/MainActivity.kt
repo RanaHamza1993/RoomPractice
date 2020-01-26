@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope,NoteListAdapter.OnDelet
         get() = job + Dispatchers.Main
     private var noteViewModel: NoteViewModel?=null
     private var noteListAdapter: NoteListAdapter? = null
+    //var listOfString=ArrayList<String>()
+    //var mutableLive=MutableLiveData(listOfString)
 
     companion object {
         val NEW_NOTE_ACTIVITY_REQUEST_CODE = 1
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope,NoteListAdapter.OnDelet
         super.onCreate(savedInstanceState)
         job= Job()
         setContentView(R.layout.activity_main)
+//        mutableLive.observe(this,androidx.lifecycle.Observer {
+//            showInfoMessage(it.toString())
+//        })
         noteViewModel = ViewModelProviders1.of(this).get(NoteViewModel::class.java)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         noteListAdapter = NoteListAdapter(this, this)
@@ -67,7 +72,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope,NoteListAdapter.OnDelet
 
             val note_id = UUID.randomUUID().toString()
             val note = NoteEntity(note_id, data!!.getStringExtra(NewNoteActivity.NOTE_ADDED))
-          //  noteViewModel?.insert(note)
+            //listOfString.add(note.mNote)
+            //mutableLive.postValue(listOfString)
+            noteViewModel?.insert(note)
 
 
 
